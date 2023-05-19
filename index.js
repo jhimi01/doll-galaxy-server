@@ -69,24 +69,7 @@ async function run() {
 
     
 
-    // update the current data
-    app.put('/toys/all/email/:id', async (req, res,)=>{
-const id = req.params.id;
-const filter = {_id: new ObjectId(id)}
-const options = { upsert: true};
-const updatetoys = req.body;
-
-const updateDoc = {
-  $set: {
-    price: updatetoys.price,
-    details: updatetoys.details,
-    availablequality: updatetoys.availablequality
-  }
-}
-const result = await toysCollection.updateOne(filter, updateDoc, options)
-res.send(result);
-    })
-
+    
 
 
 // sub category alll data
@@ -120,6 +103,42 @@ res.send(result);
       res.send(result);
     });
 
+
+    
+    // update the current data
+    app.put('/toys/all/email/:id', async (req, res,)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const options = { upsert: true};
+      const updatetoys = req.body;
+      
+      const updateDoc = {
+        $set: {
+          price: updatetoys.price,
+          details: updatetoys.details,
+          availablequality: updatetoys.availablequality
+        }
+      }
+      const result = await toysCollection.updateOne(filter, updateDoc, options)
+      res.send(result);
+          })
+      
+
+
+
+// delete the data
+app.delete('/toys/all/email/:id', async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await toysCollection.deleteOne(query)
+  res.send(result);
+})
+//  app.delete('/toys/all/email/:email', async (req, res) => {
+//   const email = req.params.email;
+//   const query = { email: email };
+//   const result = await toysCollection.deleteOne(query);
+//   res.send(result);
+// });
 
 
 
