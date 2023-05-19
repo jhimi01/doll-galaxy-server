@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 const uri = `mongodb+srv://${process.env.TOY_USER}:${process.env.TOY_PASS}@cluster0.ysrfscy.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri)
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -35,12 +35,13 @@ async function run() {
      
     // });
     
-// alll data
+
+// sub category alll data
     app.get('/toys', async (req, res) => {
       const selectedCategory = req.query.category;
     
       if (selectedCategory) {
-        const query = { sub_category: selectedCategory };
+        const query = { subcategory: selectedCategory };
         const cursor = toysCollection.find(query);
         const result = await cursor.toArray();
         res.send(result);
@@ -58,6 +59,13 @@ async function run() {
       res.send(toy);
     })
 
+
+    app.post("/toys", async(req, res)=>{
+      const body = req.body;
+      const result = await toysCollection.insertOne(body);
+      console.log(result)
+      res.send(result);
+    });
 
 
 
