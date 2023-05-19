@@ -36,6 +36,16 @@ async function run() {
     // });
     
 
+    // get all data from the database
+    
+    
+    app.get('/toys/all', async (req, res) => {
+      const cursor = toysCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+
 // sub category alll data
     app.get('/toys', async (req, res) => {
       const selectedCategory = req.query.category;
@@ -59,7 +69,7 @@ async function run() {
       res.send(toy);
     })
 
-
+// add toys collection
     app.post("/toys", async(req, res)=>{
       const body = req.body;
       const result = await toysCollection.insertOne(body);
