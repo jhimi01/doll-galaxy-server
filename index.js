@@ -45,6 +45,30 @@ async function run() {
       res.send(result);
     });
 
+    // app.get('/toys/all/email', async (req, res) => {
+    //   console.log(req.query.email)
+    //   let query = {}
+    //   if (req.query?.email) {
+    //     const query = {email : req.query?.email}
+    //   }
+    //   console.log(query)
+    //   const result = await toysCollection.find(query).toArray();
+    //   res.send(result);
+    // });
+
+    app.get('/toys/all/email', async (req, res) => {
+      console.log(req.query.email);
+      let query = {};
+      if (req.query?.email) {
+        query = { email: req.query?.email }; // Remove the "let" keyword
+      }
+      console.log(query);
+      const result = await toysCollection.find(query).toArray();
+      res.send(result);
+    });
+    
+
+
 
 // sub category alll data
     app.get('/toys', async (req, res) => {
