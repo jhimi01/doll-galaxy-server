@@ -66,7 +66,26 @@ async function run() {
       const result = await toysCollection.find(query).toArray();
       res.send(result);
     });
+
     
+
+    // update the current data
+    app.put('/toys/all/email/:id', async (req, res,)=>{
+const id = req.params.id;
+const filter = {_id: new ObjectId(id)}
+const options = { upsert: true};
+const updatetoys = req.body;
+
+const updateDoc = {
+  $set: {
+    price: updatetoys.price,
+    details: updatetoys.details,
+    availablequality: updatetoys.availablequality
+  }
+}
+const result = await toysCollection.updateOne(filter, updateDoc, options)
+res.send(result);
+    })
 
 
 
