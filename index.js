@@ -52,24 +52,21 @@ async function run() {
       res.send(result);
     });
 
-    // app.get('/toys/all/email', async (req, res) => {
-    //   console.log(req.query.email)
-    //   let query = {}
-    //   if (req.query?.email) {
-    //     const query = {email : req.query?.email}
-    //   }
-    //   console.log(query)
-    //   const result = await toysCollection.find(query).toArray();
-    //   res.send(result);
-    // });
+    // view the single data from all data
+    app.get('/toys/all/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await toysCollection.findOne(query);
+      res.send(result);
+    });
 
 
-
+// specific id with email address
     app.get('/toys/all/email', async (req, res) => {
       console.log(req.query.email);
       let query = {};
       if (req.query?.email) {
-        query = { email: req.query?.email }; // Remove the "let" keyword
+        query = { email: req.query?.email }; 
       }
       console.log(query);
       const result = await toysCollection.find(query).toArray();
@@ -103,6 +100,7 @@ async function run() {
       const toy = await toysCollection.findOne(query);
       res.send(toy);
     })
+
 
 // add toys collection
     app.post("/toys", async(req, res)=>{
