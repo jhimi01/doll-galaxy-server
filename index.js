@@ -47,7 +47,7 @@ async function run() {
     
     // get all data from the database
     app.get('/toys/all', async (req, res) => {
-      const cursor = toysCollection.find();
+      const cursor = toysCollection.find().limit(20);
       const result = await cursor.toArray();
       res.send(result);
     });
