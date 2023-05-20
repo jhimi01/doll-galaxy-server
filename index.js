@@ -26,19 +26,26 @@ async function run() {
     await client.connect();
 
     const toysCollection = client.db('allToys').collection('toys');
+    
+    // createing index on two fields
+    const indexKeys = { name: 1 };
+    // and actual field name
+    const indexOptions = { name: 'name'};
 
-    // app.get('/toys', async (req, res) => {
+    const result = await toysCollection.createIndex(indexKeys, indexOptions);
+
+    app.get("/searchtext/:search", async (req, res) => {
+      const searchText = req.params.search;
+
+      const result = await toysCollection.find({
+        name: {$regex: searchText, $options: "i"}
+      }).toArray();
       
-    //     const cursor = toysCollection.find();
-    //     const result = await cursor.toArray();
-    //     res.send(result);
-     
-    // });
+      res.send(result)
+    })
     
-
+    
     // get all data from the database
-    
-    
     app.get('/toys/all', async (req, res) => {
       const cursor = toysCollection.find();
       const result = await cursor.toArray();
@@ -55,6 +62,8 @@ async function run() {
     //   const result = await toysCollection.find(query).toArray();
     //   res.send(result);
     // });
+
+
 
     app.get('/toys/all/email', async (req, res) => {
       console.log(req.query.email);
