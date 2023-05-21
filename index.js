@@ -83,6 +83,7 @@ async function run() {
       res.send(toy);
     })
    
+
 // specific id with email address
 app.get('/user/data', async (req, res) => {
   console.log(req.query.email)
@@ -95,6 +96,31 @@ app.get('/user/data', async (req, res) => {
   .toArray();
 res.send(result);
 });
+
+
+
+// sorting  low high to low
+app.get('/user/sort/low', async (req, res) => {
+  const email = req.query.email;
+  const query = { email: email };
+  const result = await toysCollection
+    .find(query)
+    .sort({ price: -1 })
+    .toArray();
+  res.send(result);
+});
+
+// sorting high to low
+app.get('/user/sort/high', async (req, res) => {
+  const email = req.query.email;
+  const query = { email: email };
+  const result = await toysCollection
+    .find(query)
+    .sort({ price: 1 })
+    .toArray();
+  res.send(result);
+});
+
 
 
 
@@ -131,20 +157,6 @@ res.send(result);
   const result = await toysCollection.deleteOne(query)
   res.send(result);
    })
-
-
-
-
-
-
-
-//  app.delete('/toys/all/email/:email', async (req, res) => {
-//   const email = req.params.email;
-//   const query = { email: email };
-//   const result = await toysCollection.deleteOne(query);
-//   res.send(result);
-// });
-
 
 
 
