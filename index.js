@@ -28,11 +28,11 @@ async function run() {
     const toysCollection = client.db('allToys').collection('toys');
     
     // createing index on two fields
-    const indexKeys = { name: 1 };
+    // const indexKeys = { name: 1 };
     // and actual field name
-    const indexOptions = { name: 'name'};
+    // const indexOptions = { name: 'name'};
 
-    const result = await toysCollection.createIndex(indexKeys, indexOptions);
+    // const result = await toysCollection.createIndex(indexKeys, indexOptions);
 
     // search by toy name
     app.get("/searchtext/:search", async (req, res) => {
